@@ -18,7 +18,7 @@ void setup() {
 #ifdef ESP8266
   Wire.pins(2, 14);
 #endif
-  Wire.begin();asdga
+  Wire.begin();
 
   // Start the OLED Display OD01
   OD01.begin();
