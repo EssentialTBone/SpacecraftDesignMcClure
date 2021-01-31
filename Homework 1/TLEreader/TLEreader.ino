@@ -18,14 +18,14 @@ void setup() {
 #ifdef ESP8266
   Wire.pins(2, 14);
 #endif
-  Wire.begin();
-  
+  Wire.begin();asdga
+
   // Start the OLED Display OD01
   OD01.begin();
 
   // Small delay
   delay(DELAY_TIME);
-  
+
   Serial.begin(115200);
   Serial.println("Attempting to connect to WiFi");
   OD01.println("Attempting to connect to WiFi");
@@ -39,7 +39,7 @@ void setup() {
     OD01.println("Connected to wifi");
     Serial.println("\nStarting connection with server...");
     OD01.println("Starting connection with server...");
-  
+
   makeRequest();
 }
 
@@ -54,7 +54,7 @@ void scrollDown(){
       // while loop runs while waiting for server availability
     }
     c = client.read();
-    
+
     if (c == '\n'){
       lineCounter = lineCounter+1;
     }
@@ -75,13 +75,13 @@ void makeRequest(){
     Serial.print("TLE for: ");
     // Make HTTP request:
     client.println("GET /NORAD/elements/stations.txt HTTP/1.0");     // rest of url for your chosen txt file, i.e extension following celestrak.com , Replace everything EXCEPT: GET HTTP/1.0
-    client.println();                                                         
+    client.println();
     }
-    
+
    // if there are incoming bytes available
    // from the server, read them and print them:
   char c;
-  int lineCounter=0; 
+  int lineCounter=0;
  while (!client.available()){
   // while loop runs while waiting for server availability
  }
@@ -95,14 +95,14 @@ void makeRequest(){
     return;
   }
 scrollDown();
- lineCounter=0; 
+ lineCounter=0;
  while (true) {
    while (!client.available()){
    // while loop runs while waiting for server availability
     }
     c = client.read();
     Serial.print(c);
-    
+
     if (c == '\n'){
       lineCounter = lineCounter+1;
     }
