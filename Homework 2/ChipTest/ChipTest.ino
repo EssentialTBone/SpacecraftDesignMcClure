@@ -9,7 +9,8 @@ xSI01 SI01;
 xSL01 SL01;
 xSN01 SN01;
 
-int count=0;
+int lock=0;
+int printed=0;
 
 const int DELAY_TIME = 1000;
 
@@ -38,8 +39,11 @@ void setup() {
 }
 
 void loop() {
-
-  if (count<12) {
+  long latitude = 0;
+  latitude = SN01.getLatitude();
+  if (latitude!=0) {
+    lock=1;
+  }
 
   // Create variables to store the data read from SW01
   float alt;
@@ -63,7 +67,7 @@ void loop() {
   tempC = SW01.getTempC(); // Temperature in Celcuis
   tempF = SW01.getTempF(); // Temperature in Farenheit
 
-  if (count>10) {
+  if (lock==1 && printed==0) {
   Serial.print("SW01: Altitude: ");
   Serial.print(alt);
   Serial.print(" m    ");
@@ -84,7 +88,7 @@ void loop() {
   // Read and calculate data from SL01 sensor
   SI01.poll();
 
-  if (count>10) {
+  if (lock==1 && printed==0) {
   Serial.print("SI01: ");
   printGyro();  // Print "G: gx, gy, gz"
   printAccel(); // Print "A: ax, ay, az"
@@ -105,7 +109,7 @@ void loop() {
   // Request SL01 to return calculated LUX intensity
   lux = SL01.getLUX();
 
-  if (count>10) {
+  if (lock==1 && printed==0) {
   // Display Data on the Serial monitor
   Serial.print("SL01: Ambient Light Level: ");
   Serial.print(lux);
@@ -126,7 +130,7 @@ void loop() {
 
   // Create a variable to store the data read from SN01
   String time;
-  long latitude = 0;
+  latitude = 0;
   long longitude = 0;
   String date;
 
@@ -143,7 +147,7 @@ void loop() {
   // Get the longitude from GPS
   longitude = SN01.getLongitude();
 
-  if (count>10) {
+  if (lock==1 && printed==0) {
   // Display the recorded data over the serial monitor
   Serial.print("SN01: GPS Time: ");
   Serial.print(time);
@@ -158,12 +162,11 @@ void loop() {
   Serial.println(longitude);
 
   Serial.println();
-  }
+  printed=1;
   }
 
   // Small delay between sensor reads
   delay(DELAY_TIME);
-  count=count+1;
   
 }
 
