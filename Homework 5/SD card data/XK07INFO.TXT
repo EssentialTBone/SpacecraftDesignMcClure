@@ -1,0 +1,4 @@
+[SD CARD] SD Card Initialized
+[SD CARD] Folder Created
+[SD CARD] Folder Created
+Created Data File
